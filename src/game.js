@@ -43,7 +43,7 @@ class Game {
   create([playerImage]) {
     // eslint-disable-next-line new-cap
     this.map = TileEngine(dataAssets['data/map']);
-    this.player = new Player(10, 10, playerImage);
+    this.player = new Player(12, 12, playerImage, this.map);
     this.loop.start(); // start the game
   }
 

@@ -16,9 +16,10 @@ export default class Player {
    * @param {number} x
    * @param {number} y
    * @param {HTMLImageElement} image
+   * @param {*} map
    * @memberof Player
    */
-  constructor(x, y, image) {
+  constructor(x, y, image, map) {
     this.x = x;
     this.y = y;
     // eslint-disable-next-line new-cap
@@ -27,6 +28,7 @@ export default class Player {
       y: y * 16,
       image: image,
     });
+    this.map = map;
     initKeys();
     bindKeys(['left', 'right', 'up', 'down'], (e) => {
       e.preventDefault();
@@ -41,20 +43,16 @@ export default class Player {
   update() {
     if (!this.moving) {
       if (keyPressed('left')) {
-        this.x -= 1;
-        this.moving = true;
+        this.moveTo(this.x - 1, this.y);
       } else if (keyPressed('right')) {
-        this.x += 1;
-        this.moving = true;
+        this.moveTo(this.x + 1, this.y);
       }
     }
     if (!this.moving) {
       if (keyPressed('up')) {
-        this.y -= 1;
-        this.moving = true;
+        this.moveTo(this.x, this.y - 1);
       } else if (keyPressed('down')) {
-        this.y += 1;
-        this.moving = true;
+        this.moveTo(this.x, this.y + 1);
       }
     }
     if (this.sprite.x < this.x * 16) {
@@ -80,5 +78,21 @@ export default class Player {
    */
   render() {
     this.sprite.render();
+  }
+
+  /**
+   * Tries to move the player to the specified map coordinates.
+   *
+   * @param {number} x
+   * @param {number} y
+   * @memberof Player
+   */
+  moveTo(x, y) {
+    console.log(this.map.tileAtLayer('layer', {row: y, col: x}));
+    if (this.map.tileAtLayer('layer', {row: y, col: x}) !== 35) {
+      this.moving = true;
+      this.x = x;
+      this.y = y;
+    }
   }
 }
