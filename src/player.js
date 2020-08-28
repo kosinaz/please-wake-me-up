@@ -88,8 +88,7 @@ export default class Player {
    * @memberof Player
    */
   moveTo(x, y) {
-    console.log(this.map.tileAtLayer('layer', {row: y, col: x}));
-    if (this.map.tileAtLayer('layer', {row: y, col: x}) !== 35) {
+    if (this.map.tileAtLayer('layer', {col: x, row: y}) !== 35) {
       this.moving = true;
       this.x = x;
       this.y = y;
