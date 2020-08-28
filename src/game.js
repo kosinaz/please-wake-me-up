@@ -34,19 +34,18 @@ class Game {
 
     let map;
 
-    load('image/tileset.png', 'data/map.json').then((assets) => {
-      // eslint-disable-next-line new-cap
-      map = TileEngine(dataAssets['data/map']);
-      loop.start(); // start the game
-    });
+    load('image/player.png', 'image/tileset.png', 'data/map.json')
+        .then(([playerImage]) => {
+          // eslint-disable-next-line new-cap
+          map = TileEngine(dataAssets['data/map']);
+          player.image = playerImage;
+          loop.start(); // start the game
+        });
 
     // eslint-disable-next-line new-cap
-    const sprite = Sprite({
+    const player = Sprite({
       x: 100, // starting x,y position of the sprite
-      y: 80,
-      color: 'red', // fill color of the sprite rectangle
-      width: 20, // width and height of the sprite rectangle
-      height: 40,
+      y: 100,
     });
 
     // eslint-disable-next-line new-cap
@@ -54,24 +53,24 @@ class Game {
       update: () => { // update the game state
         if (keyPressed('left')) {
           // left arrow pressed
-          sprite.x -= 10;
+          player.x -= 10;
         } else if (keyPressed('right')) {
           // right arrow pressed
-          sprite.x += 10;
+          player.x += 10;
         }
 
         if (keyPressed('up')) {
           // up arrow pressed
-          sprite.y -= 10;
+          player.y -= 10;
         } else if (keyPressed('down')) {
           // down arrow pressed
-          sprite.y += 10;
+          player.y += 10;
         }
-        sprite.update();
+        player.update();
       },
       render: () => { // render the game state
         map.render();
-        sprite.render();
+        player.render();
       },
     });
   }
