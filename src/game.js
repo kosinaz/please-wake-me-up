@@ -6,6 +6,7 @@ import {
   dataAssets,
 } from '/lib/kontra.min.mjs';
 import Player from './player.js';
+import Ball from './ball.js';
 
 /**
  * Represents the game.
@@ -29,6 +30,7 @@ class Game {
     });
     load(
         'image/player.png',
+        'image/ball.png',
         'image/tileset.png',
         'data/map.json',
     ).then(this.create.bind(this));
@@ -40,10 +42,12 @@ class Game {
    * @param {HTMLImageElement} [playerImage]
    * @memberof Game
    */
-  create([playerImage]) {
+  create([playerImage, ballImage]) {
     // eslint-disable-next-line new-cap
     this.map = TileEngine(dataAssets['data/map']);
-    this.player = new Player(15, 21, playerImage, this.map);
+    this.player = new Player(35, 21, playerImage, this.map);
+    this.ball = new Ball(48, 11, ballImage, this.map);
+    this.ball.direction = 'down';
     this.loop.start(); // start the game
   }
 
@@ -54,6 +58,7 @@ class Game {
    */
   update() {
     this.player.update();
+    this.ball.update();
   }
 
   /**
@@ -64,6 +69,7 @@ class Game {
   render() {
     this.map.render();
     this.player.render();
+    this.ball.render();
   }
 }
 
