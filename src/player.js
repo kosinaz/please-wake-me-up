@@ -1,17 +1,15 @@
 import {
-  Sprite,
-  SpriteSheet,
   initKeys,
   bindKeys,
   keyPressed,
-  degToRad,
-} from '/lib/kontra.min.mjs';
+} from '/lib/kontra.min.mjs'; 
+import Actor from './actor.js';
 /**
  * Represents the player character.
  *
  * @class Player
  */
-export default class Player {
+export default class Player extends Actor {
   /**
    * Creates an instance of Player.
    *
@@ -22,32 +20,7 @@ export default class Player {
    * @memberof Player
    */
   constructor(x, y, image, map) {
-    this.x = x;
-    this.y = y;
-    // eslint-disable-next-line new-cap
-    const spriteSheet = SpriteSheet({
-      image: image,
-      frameWidth: 16,
-      frameHeight: 16,
-      animations: {
-        idle: {
-          frames: 2,
-          loop: false,
-        },
-        walk: {
-          frames: [2, 1, 0, 1, 2, 3, 4, 3],
-          frameRate: 30,
-        },
-      },
-    });
-    // eslint-disable-next-line new-cap
-    this.sprite = Sprite({
-      x: x * 16 + 8, // starting x,y position of the sprite
-      y: y * 16 + 8,
-      anchor: {x: 0.5, y: 0.5},
-      animations: spriteSheet.animations,
-    });
-    this.map = map;
+    super(x, y, image, map);
     initKeys();
     bindKeys(['left', 'right', 'up', 'down'], (e) => {
       e.preventDefault();
@@ -60,40 +33,22 @@ export default class Player {
    * @memberof Player
    */
   update() {
+    if (this.sprite.x === this.x * 16 + 8 &&
+      this.sprite.y === this.y * 16 + 8) {
+      this.direction = null;
+    }
     if (!this.moving) {
       if (keyPressed('left')) {
-        this.sprite.rotation = degToRad(90);
-        this.moveTo(this.x - 1, this.y);
+        this.direction = 'left';
       } else if (keyPressed('right')) {
-        this.sprite.rotation = degToRad(-90);
-        this.moveTo(this.x + 1, this.y);
-      }
-    }
-    if (!this.moving) {
-      if (keyPressed('up')) {
-        this.sprite.rotation = degToRad(180);
-        this.moveTo(this.x, this.y - 1);
+        this.direction = 'right';
+      } else if (keyPressed('up')) {
+        this.direction = 'up';
       } else if (keyPressed('down')) {
-        this.sprite.rotation = degToRad(0);
-        this.moveTo(this.x, this.y + 1);
+        this.direction = 'down';
       }
     }
-    if (this.sprite.x < this.x * 16 + 8) {
-      this.sprite.x += 2;
-    } else if (this.sprite.x > this.x * 16 + 8) {
-      this.sprite.x -= 2;
-    }
-    if (this.sprite.y < this.y * 16 + 8) {
-      this.sprite.y += 2;
-    } else if (this.sprite.y > this.y * 16 + 8) {
-      this.sprite.y -= 2;
-    }
-    if (this.sprite.x === this.x * 16 + 8 &&
-        this.sprite.y === this.y * 16 + 8) {
-      this.sprite.playAnimation('idle');
-      this.moving = false;
-    }
-    this.sprite.update();
+    super.update();
   }
 
   /**
