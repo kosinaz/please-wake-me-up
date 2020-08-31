@@ -3,6 +3,7 @@ import {
   initKeys,
   bindKeys,
   keyPressed,
+  emit,
 } from '/lib/kontra.min.mjs';
 import Actor from './actor.js';
 /**
@@ -52,15 +53,6 @@ export default class Player extends Actor {
   }
 
   /**
-   * Renders the player.
-   *
-   * @memberof Player
-   */
-  render() {
-    this.sprite.render();
-  }
-
-  /**
    * Tries to move the player to the specified map coordinates.
    *
    * @param {number} x
@@ -74,6 +66,7 @@ export default class Player extends Actor {
       this.moving = true;
       this.x = x;
       this.y = y;
+      emit('playerMoved', x, y);
     }
   }
 }

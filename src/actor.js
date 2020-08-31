@@ -53,6 +53,9 @@ export default class Actor {
    * @memberof Actor
    */
   update() {
+    if (this.dead) {
+      return;
+    }
     if (!this.moving) {
       if (this.direction === 'left') {
         this.sprite.rotation = degToRad(90);
@@ -91,6 +94,9 @@ export default class Actor {
    * @memberof Actor
    */
   render() {
+    if (this.dead) {
+      return;
+    }
     this.sprite.render();
   }
 

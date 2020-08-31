@@ -1,4 +1,7 @@
-import {imageAssets} from '/lib/kontra.min.mjs';
+import {
+  imageAssets,
+  on,
+} from '/lib/kontra.min.mjs';
 import Actor from './actor.js';
 /**
  * Represents the ball character.
@@ -16,6 +19,24 @@ export default class Ball extends Actor {
    */
   constructor(x, y, map) {
     super(x, y, imageAssets['image/ball'], map);
+    on('playerMoved', (x, y) => {
+      if (this.moving) {
+        return;
+      }
+      if (this.x === x) {
+        if (this.y > y) {
+          this.direction = 'up';
+        } else {
+          this.direction = 'down';
+        }
+      } else if (this.y === y) {
+        if (this.x > x) {
+          this.direction = 'left';
+        } else {
+          this.direction = 'right';
+        }
+      }
+    });
   }
 
   /**

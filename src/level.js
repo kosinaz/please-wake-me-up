@@ -29,6 +29,10 @@ export default class Level {
    * @memberof Game
    */
   update() {
+    if (this.player.x === this.ball.x && this.player.y === this.ball.y) {
+      this.player.dead = true;
+      this.ball.direction = null;
+    }
     this.player.update();
     this.ball.update();
   }
