@@ -14,7 +14,7 @@ export default class Actor {
    *
    * @param {number} x
    * @param {number} y
-   * @param {HTMLImageElement} image
+   * @param {*} image
    * @param {*} map
    * @memberof Actor
    */

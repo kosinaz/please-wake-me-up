@@ -1,8 +1,9 @@
 import {
+  imageAssets,
   initKeys,
   bindKeys,
   keyPressed,
-} from '/lib/kontra.min.mjs'; 
+} from '/lib/kontra.min.mjs';
 import Actor from './actor.js';
 /**
  * Represents the player character.
@@ -15,12 +16,11 @@ export default class Player extends Actor {
    *
    * @param {number} x
    * @param {number} y
-   * @param {HTMLImageElement} image
    * @param {*} map
    * @memberof Player
    */
-  constructor(x, y, image, map) {
-    super(x, y, image, map);
+  constructor(x, y, map) {
+    super(x, y, imageAssets['image/player'], map);
     initKeys();
     bindKeys(['left', 'right', 'up', 'down'], (e) => {
       e.preventDefault();

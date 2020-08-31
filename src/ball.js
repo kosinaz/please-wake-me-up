@@ -1,3 +1,4 @@
+import {imageAssets} from '/lib/kontra.min.mjs';
 import Actor from './actor.js';
 /**
  * Represents the ball character.
@@ -10,12 +11,11 @@ export default class Ball extends Actor {
    *
    * @param {number} x
    * @param {number} y
-   * @param {HTMLImageElement} image
    * @param {*} map
    * @memberof Ball
    */
-  constructor(x, y, image, map) {
-    super(x, y, image, map);
+  constructor(x, y, map) {
+    super(x, y, imageAssets['image/ball'], map);
   }
 
   /**
