@@ -3,7 +3,7 @@ import {
   SpriteSheet,
   imageAssets,
   degToRad,
-} from '/lib/kontra.min.mjs';
+} from '../lib/kontra.min.mjs';
 /**
  * Represents an interactive character of the game.
  *

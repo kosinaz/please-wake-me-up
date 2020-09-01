@@ -3,7 +3,7 @@ import {
   dataAssets,
   on,
   emit,
-} from '/lib/kontra.min.mjs';
+} from '../lib/kontra.min.mjs';
 import Player from './player.js';
 import Ball from './ball.js';
 /**

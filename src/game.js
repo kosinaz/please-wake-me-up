@@ -2,7 +2,7 @@ import {
   init,
   GameLoop,
   load,
-} from '/lib/kontra.min.mjs';
+} from '../lib/kontra.min.mjs';
 import Level from './level.js';
 
 /**
