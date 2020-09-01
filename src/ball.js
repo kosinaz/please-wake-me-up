@@ -54,6 +54,16 @@ export default class Ball extends Actor {
       tileID === 8
     ) {
       this.map.setTileAtLayer('dynamic', {col: x, row: y}, 1);
+      console.log(this.map);
+      if (y > 45) {
+        for (let c = 0; c < this.map.width; c += 1) {
+          for (let r = 0; r < this.map.width; r += 1) {
+            if (this.map.tileAtLayer('dynamic', {col: c, row: r}) === tileID) {
+              this.map.setTileAtLayer('dynamic', {col: c, row: r}, tileID - 2);
+            }
+          }
+        }
+      }
       this.direction = null;
       this.moving = false;
     } else if (

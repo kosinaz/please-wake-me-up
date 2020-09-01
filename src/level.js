@@ -37,7 +37,6 @@ export default class Level {
         'dynamic',
         [...dataAssets['data/level' + level].layers[0].data],
     );
-    console.log(this.map);
     this.player = new Player(this.map);
     this.balls = [];
     this.spawners = this.map.layerMap.actor.objects;
