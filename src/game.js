@@ -37,7 +37,7 @@ class Game {
         'data/level2.json',
         'data/level3.json',
     ).then(() => {
-      this.level = new Level(3);
+      this.level = new Level(1);
       this.loop.start(); // start the game
     });
   }

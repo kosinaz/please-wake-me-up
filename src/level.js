@@ -2,6 +2,7 @@ import {
   TileEngine,
   dataAssets,
   on,
+  emit,
 } from '/lib/kontra.min.mjs';
 import Player from './player.js';
 import Ball from './ball.js';
@@ -45,7 +46,13 @@ export default class Level {
     }
     on('playerLeft', () => {
       this.destroy();
-      this.create(level + 1);
+      if (level < 3) {
+        this.create(level + 1);
+      }
+    });
+    on('playerDied', () => {
+      this.destroy();
+      this.create(this.level);
     });
   }
 
@@ -73,8 +80,7 @@ export default class Level {
         return;
       }
       if (this.player.x === ball.x && this.player.y === ball.y) {
-        this.destroy();
-        this.create(this.level);
+        emit('playerDied');
       }
       ball.update();
     });
@@ -87,6 +93,9 @@ export default class Level {
    * @memberof Game
    */
   render() {
+    if (!this.map) {
+      return;
+    }
     this.map.renderLayer('dynamic');
     this.player.render();
     this.balls.forEach((ball) => {
