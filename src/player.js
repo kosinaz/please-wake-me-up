@@ -3,7 +3,7 @@ import {
   bindKeys,
   keyPressed,
   emit,
-} from '../lib/kontra.min.mjs';
+} from '../lib/kontra.min.js';
 import Actor from './actor.js';
 /**
  * Represents the player character.

@@ -1,6 +1,6 @@
 import {
   on,
-} from '../lib/kontra.min.mjs';
+} from '../lib/kontra.min.js';
 import Actor from './actor.js';
 /**
  * Represents the ball character.
