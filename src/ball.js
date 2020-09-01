@@ -1,5 +1,4 @@
 import {
-  imageAssets,
   on,
 } from '/lib/kontra.min.mjs';
 import Actor from './actor.js';
@@ -12,15 +11,14 @@ export default class Ball extends Actor {
   /**
    * Creates an instance of Ball.
    *
-   * @param {number} x
-   * @param {number} y
    * @param {*} map
+   * @param {number} id
    * @memberof Ball
    */
-  constructor(x, y, map) {
-    super(x, y, imageAssets['image/ball'], map);
+  constructor(map, id) {
+    super(map, id);
     on('playerMoved', (x, y) => {
-      if (this.moving) {
+      if (this.direction) {
         return;
       }
       if (this.x === x) {
@@ -48,11 +46,24 @@ export default class Ball extends Actor {
    */
   moveTo(x, y) {
     super.moveTo(x, y);
-    const tileID = this.map.tileAtLayer('layer', {col: x, row: y});
-    if (tileID === 3 || tileID === 4 || tileID === 7 || tileID === 8) {
-      this.map.setTileAtLayer('layer', {col: x, row: y}, 1);
+    const tileID = this.map.tileAtLayer('dynamic', {col: x, row: y});
+    if (
+      tileID === 3 ||
+      tileID === 4 ||
+      tileID === 7 ||
+      tileID === 8
+    ) {
+      this.map.setTileAtLayer('dynamic', {col: x, row: y}, 1);
       this.direction = null;
       this.moving = false;
+    } else if (
+      tileID === 9 ||
+      tileID === 10 ||
+      tileID === 13 ||
+      tileID === 14
+    ) {
+      this.map.setTileAtLayer('dynamic', {col: x, row: y}, 15);
+      this.sprite = null;
     }
   }
 }

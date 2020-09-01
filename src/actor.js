@@ -1,6 +1,7 @@
 import {
   Sprite,
   SpriteSheet,
+  imageAssets,
   degToRad,
 } from '/lib/kontra.min.mjs';
 /**
@@ -12,18 +13,18 @@ export default class Actor {
   /**
    * Creates an instance of Actor.
    *
-   * @param {number} x
-   * @param {number} y
-   * @param {*} image
    * @param {*} map
+   * @param {number} id
    * @memberof Actor
    */
-  constructor(x, y, image, map) {
-    this.x = x;
-    this.y = y;
+  constructor(map, id) {
+    this.map = map;
+    const spawner = this.map.layerMap.actor.objects[id || 0];
+    this.x = spawner.x / 16;
+    this.y = spawner.y / 16;
     // eslint-disable-next-line new-cap
     const spriteSheet = SpriteSheet({
-      image: image,
+      image: imageAssets['image/' + spawner.name],
       frameWidth: 16,
       frameHeight: 16,
       animations: {
@@ -39,8 +40,8 @@ export default class Actor {
     });
     // eslint-disable-next-line new-cap
     this.sprite = Sprite({
-      x: x * 16 + 8, // starting x,y position of the sprite
-      y: y * 16 + 8,
+      x: spawner.x + 8, // starting x,y position of the sprite
+      y: spawner.y + 8,
       anchor: {x: 0.5, y: 0.5},
       animations: spriteSheet.animations,
     });
@@ -53,7 +54,7 @@ export default class Actor {
    * @memberof Actor
    */
   update() {
-    if (this.dead) {
+    if (!this.sprite) {
       return;
     }
     if (!this.moving) {
@@ -70,6 +71,9 @@ export default class Actor {
         this.sprite.rotation = degToRad(0);
         this.moveTo(this.x, this.y + 1);
       }
+    }
+    if (!this.sprite) {
+      return;
     }
     if (this.sprite.x < this.x * 16 + 8) {
       this.sprite.x += 2;
@@ -94,10 +98,18 @@ export default class Actor {
    * @memberof Actor
    */
   render() {
-    if (this.dead) {
-      return;
+    if (this.sprite) {
+      this.sprite.render();
     }
-    this.sprite.render();
+  }
+
+  /**
+   * Removes the actor.
+   *
+   * @memberof Actor
+   */
+  destroy() {
+    this.sprite = null;
   }
 
   /**
@@ -108,7 +120,7 @@ export default class Actor {
    * @memberof Actor
    */
   moveTo(x, y) {
-    const tileID = this.map.tileAtLayer('layer', {col: x, row: y});
+    const tileID = this.map.tileAtLayer('dynamic', {col: x, row: y});
     if (tileID !== 3 && tileID !== 4 && tileID !== 7 && tileID !== 8) {
       this.sprite.playAnimation('walk');
       this.moving = true;

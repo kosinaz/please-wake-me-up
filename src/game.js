@@ -34,6 +34,7 @@ class Game {
         'image/ball.png',
         'image/tileset.png',
         'data/level1.json',
+        'data/level2.json',
     ).then(() => {
       this.level = new Level(1);
       this.loop.start(); // start the game

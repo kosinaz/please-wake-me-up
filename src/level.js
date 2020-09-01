@@ -1,6 +1,7 @@
 import {
   TileEngine,
   dataAssets,
+  on,
 } from '/lib/kontra.min.mjs';
 import Player from './player.js';
 import Ball from './ball.js';
@@ -17,10 +18,49 @@ export default class Level {
    * @memberof Level
    */
   constructor(level) {
+    this.create(level);
+  }
+
+  /**
+   * Start the specified level.
+   *
+   * @param {number} level
+   * @memberof Level
+   */
+  create(level) {
+    this.level = level;
+    this.levelData = [...dataAssets['data/level' + level].layers[0].data];
+    console.log();
     // eslint-disable-next-line new-cap
-    this.map = TileEngine(dataAssets['data/level'+ level]);
-    this.player = new Player(36, 19, this.map);
-    this.ball = new Ball(47, 21, this.map);
+    this.map = TileEngine(dataAssets['data/level' + level]);
+    this.map.setLayer(
+        'dynamic',
+        [...dataAssets['data/level' + level].layers[0].data],
+    );
+    console.log(this.map);
+    this.player = new Player(this.map);
+    this.balls = [];
+    this.spawners = this.map.layerMap.actor.objects;
+    for (let i = 1; i < this.spawners.length; i += 1) {
+      this.balls.push(new Ball(this.map, i));
+    }
+    on('playerLeft', () => {
+      this.destroy();
+      this.create(level + 1);
+    });
+  }
+
+  /**
+   * Stops the current level and removes everything.
+   *
+   * @memberof Level
+   */
+  destroy() {
+    this.map = null;
+    this.player.destroy();
+    this.balls.forEach((ball) => {
+      ball.destroy();
+    });
   }
 
   /**
@@ -29,12 +69,17 @@ export default class Level {
    * @memberof Game
    */
   update() {
-    if (this.player.x === this.ball.x && this.player.y === this.ball.y) {
-      this.player.dead = true;
-      this.ball.direction = null;
-    }
+    this.balls.forEach((ball) => {
+      if (!ball.sprite) {
+        return;
+      }
+      if (this.player.x === ball.x && this.player.y === ball.y) {
+        this.destroy();
+        this.create(this.level);
+      }
+      ball.update();
+    });
     this.player.update();
-    this.ball.update();
   }
 
   /**
@@ -43,8 +88,10 @@ export default class Level {
    * @memberof Game
    */
   render() {
-    this.map.render();
+    this.map.renderLayer('dynamic');
     this.player.render();
-    this.ball.render();
+    this.balls.forEach((ball) => {
+      ball.render();
+    });
   }
 }

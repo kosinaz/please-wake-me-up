@@ -1,5 +1,4 @@
 import {
-  imageAssets,
   initKeys,
   bindKeys,
   keyPressed,
@@ -15,13 +14,11 @@ export default class Player extends Actor {
   /**
    * Creates an instance of Player.
    *
-   * @param {number} x
-   * @param {number} y
    * @param {*} map
    * @memberof Player
    */
-  constructor(x, y, map) {
-    super(x, y, imageAssets['image/player'], map);
+  constructor(map) {
+    super(map);
     initKeys();
     bindKeys(['left', 'right', 'up', 'down'], (e) => {
       e.preventDefault();
@@ -60,8 +57,20 @@ export default class Player extends Actor {
    * @memberof Player
    */
   moveTo(x, y) {
-    const tileID = this.map.tileAtLayer('layer', {col: x, row: y});
-    if (tileID !== 3 && tileID !== 4 && tileID !== 7 && tileID !== 8) {
+    const tileID = this.map.tileAtLayer('dynamic', {col: x, row: y});
+    if (tileID === 11) {
+      emit('playerLeft');
+    } else if (
+      tileID !== 3 &&
+      tileID !== 4 &&
+      tileID !== 7 &&
+      tileID !== 8 &&
+      tileID !== 9 &&
+      tileID !== 10 &&
+      tileID !== 13 &&
+      tileID !== 14 &&
+      tileID !== 16
+    ) {
       this.sprite.playAnimation('walk');
       this.moving = true;
       this.x = x;
