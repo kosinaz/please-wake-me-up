@@ -31,7 +31,6 @@ export default class Level {
   create(level) {
     this.level = level;
     this.levelData = [...dataAssets['data/level' + level].layers[0].data];
-    console.log();
     // eslint-disable-next-line new-cap
     this.map = TileEngine(dataAssets['data/level' + level]);
     this.map.setLayer(

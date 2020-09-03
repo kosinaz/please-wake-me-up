@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="4">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="6">
  <editorsettings>
-  <export target="level2.json" format="json"/>
+  <export format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="../image/tileset.png" width="128" height="128"/>
@@ -16,7 +16,7 @@
  </tileset>
  <layer id="1" name="static" width="32" height="24">
   <data encoding="base64" compression="zstd">
-   KLUv/WAAC30KADJHD49TMyIiNDMxEf/wC39w25hxmoln2bKpR3WCHFkhopwNtdQQdSxzhAGHNVYa7abIyK+yCPGPlu5g78+ffvyAj6jg9ooegAKSmbJ6EmASNJGCyhRSEwHEA/GnWy0GtwcAKLwx0LiCHwGzF9bcvZBy3kBPeYs7I/a9L4dfOJ58SGrSsgm41tl3ewDuSEAGMbrN/rL+57OaC9ez6UmjwQzmK+WJ9U100PRPGtI4+bVvhN6b9QOZ8fYjeYhivE7ck0izc+GbH9l+hAPLRH7SmsCZT8fYsmPohwED5RB9mVE75pzdlmEMBSADuC89chbSed9jT3aNAXTckl8fNg9gOzdP3ghwijiiDfBntaJRt+Xr3aceKg1e3KHfmhu8Jv5uBz7FzthqvIE9QZ7EYbQIorf9yEVnIt/zIB+c/hYHe4yupzJL7aEcM3+rGmZfbXEZ
+   KLUv/WAAC40KAMLGDo9TMyIiNDMxEf8Q3DZmnGbiWbZs6lGdIEdWiChnQy01RB3LHGHAYY2VRuGmyMivsgjxj5buYO/Pn378gJCo8N6KHmACIjNlxQESYBI0kYLKFFITAcQD8adbLQaLeN0uK7qdEANJLvgRmD1hDe6FlPTGeM7b/IyY93x5+IQj5CHpScuG4bnM+u0cuMNABnXgN/HL+pXP9hdpz6bnrUY7jK/rqf5G9CD0dxrSiPyvbwTfN9QD2fHwuzi0IlJN7JPBQ+bkdzuC/w2E6sTtxJ6wnVPusa1jZsMKo+JQ/Zm933MuzpZxBBWQAfwnPzas0zndx59whQF1vjV4P2IeI38uPXki4BRxyBumz84xX93QL/OZcmhlJPMu9ebc4Cvg993kU+3sV6YNrSn6JAzZYuod91MuOOL9sIebQfjT0kQPQvFGDuX+EsfwH8vns6+2gAw=
   </data>
  </layer>
  <layer id="2" name="dynamic" width="32" height="24">
@@ -32,6 +32,12 @@
    <point/>
   </object>
   <object id="3" name="ball" x="608" y="224">
+   <point/>
+  </object>
+  <object id="4" name="turret" x="896" y="192">
+   <point/>
+  </object>
+  <object id="5" name="turret" x="960" y="736">
    <point/>
   </object>
  </objectgroup>
